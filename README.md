@@ -1,4 +1,4 @@
-# 📘 Estructuras de Datos: Guía Maestra con Java e IA Generativa
+# 📘 Estructuras de Datos: Guía Maestra
 > **Carrera de Computación - Universidad Nacional de Loja (UNL)** > **Docente:** Magister Cristian R. Narváez Guillén
 
 ![Java](https://img.shields.io/badge/Java-17%2B-orange) ![Python](https://img.shields.io/badge/Python-3.10%2B-blue) ![Status](https://img.shields.io/badge/Status-Academic_2026-green)
@@ -12,18 +12,12 @@ El contenido de este repositorio está articulado con el **Proyecto Integrador d
 **"Software de Administración del Hospital Veterinario de la UNL"**.  
 Cada estructura de datos estudiada se implementa para resolver una necesidad específica del hospital, desde la gestión de turnos hasta la optimización de rutas de suministros.
 
-## 🧠 Características Principales
-- **IA-Assisted Learning:** Guías sobre cómo utilizar herramientas de IA Generativa para el *refactoring* y análisis de complejidad ($O$).
-- **Dual Stack:** Implementaciones core en **Java** y simulaciones probabilísticas en **Python**.
-- **Gestión de Memoria:** Explicaciones visuales del comportamiento del *Stack* y *Heap* en la JVM.
-
----
 
 ## 📅 Planificación por Unidades
 
 ### [Unidad 1: Estructuras Lineales y Memoria](./docs/unidad_1.md)
 * **Teoría:** TDA, Abstracción, Pilas, Colas y Listas Enlazadas.
-* **Proyecto:** Modelado de entidades `Paciente` y gestión dinámica de `Historiales Clínicos`.
+* **Proyecto:** Eficiencia Energética en Programación (Green Computing).
 * **Prácticas:** APE 01 a APE 06.
 
 ### [Unidad 2: Ordenación, Búsqueda y Eficiencia](./docs/unidad_2.md)
