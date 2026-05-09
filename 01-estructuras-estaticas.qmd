@@ -24,9 +24,8 @@ Un arreglo es una colección contigua de elementos del mismo tipo. Su tamaño se
 
 Pensemos en la RAM como un edificio lleno de casilleros numerados secuencialmente. 
 
-```{r}
-#| eval: false
-# Ilustración en Java de la declaración de un arreglo
+```java
+// Ilustración en Java de la declaración de un arreglo
 int[] calificaciones = new int[5];
 ```
 
@@ -92,8 +91,7 @@ $Posición = DirecciónBase + (i \times N + j) \times TamañoDelDato$
 
 Esto garantiza que el acceso a cualquier celda de la matriz siga siendo una operación aritmética simple y, por tanto, mantenga un tiempo de acceso $\mathcal{O}(1)$.
 
-```{python}
-#| eval: false
+```python
 # Ejemplo en Python usando listas por comprensión para simular
 # una matriz (comportamiento 2D) de 3x3 inicializada en 0:
 matriz = [[0 for _ in range(3)] for _ in range(3)]
