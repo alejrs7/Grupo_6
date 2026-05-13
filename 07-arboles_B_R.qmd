@@ -127,3 +127,4 @@ Referencias(Latex)
   year={1987},
   publisher={ACM}
 }
+<!-- Editado definitivamente el 05/13/2026 17:56:35 -->
