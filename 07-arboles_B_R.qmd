@@ -127,3 +127,4 @@ Referencias(Latex)
   year={1987},
   publisher={ACM}
 }
+<!-- Versión final con ejemplos completos -->
