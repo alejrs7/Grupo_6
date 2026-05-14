@@ -102,6 +102,40 @@ Java — PriorityQueue (heap binario)
 
 Java incluye PriorityQueue en java.util, que implementa un min-heap binario. Para almacenar pares (tarea, prioridad) se define una clase personalizada con Comparable:
 
+<<<<<<< HEAD
+=======
+Ejemplos de Código (Colas de prioridad simulando Fibonacci Heap)
+A continuación se muestran implementaciones y uso de colas de prioridad (heap binario) en tres lenguajes. Las operaciones ilustradas son: insert, extract-min, front/peek y simulación de decrease-key mediante reinserción con prioridad más baja.
+R (usando el paquete 'collections')
+
+```r
+Primero, asegúrate de tener el paquete instalado:
+install.packages("collections")
+
+library(collections)
+
+Crear una cola de prioridad (heap binario)
+pq <- priority_queue()
+
+Insertar elementos con prioridad (menor valor = mayor prioridad)
+pq$push("Tarea A", 3)
+pq$push("Tarea B", 1)
+pq$push("Tarea C", 5)
+pq$push("Tarea D", 2)
+
+Ver el elemento con mayor prioridad (mínimo)
+print(pq$front())   "Tarea B"
+
+Extraer el elemento con mayor prioridad
+extraido <- pq$pop()
+print(extraido)     "Tarea B"
+print(pq$front())   "Tarea D"
+
+Simular decrease-key: insertar nueva entrada con prioridad más baja
+pq$push("Tarea A (prioridad actualizada)", 0)
+print(pq$pop())     "Tarea A (prioridad actualizada)"
+Java (con PriorityQueue)
+>>>>>>> 0f6d0734ba3e5f93272f2b0c525db8a95822ee19
 import java.util.PriorityQueue;
 
 // Clase que representa una tarea con prioridad
