@@ -1,0 +1,187 @@
+---
+title: "Estructuras No Lineales"
+---
+
+¡Hola a todos y bienvenidos a este capítulo sobre Estructuras No Lineales en R! En el mundo de la programación y el análisis de datos, no todo es una tabla bonita o un vector secuencial. A menudo, la información que manejamos tiene relaciones complejas, jerarquías o interconexiones que las estructuras de datos lineales simplemente no pueden representar de manera eficiente o intuitiva. Aquí es donde entran en juego los grafos y los árboles binarios.
+
+En este capítulo, exploraremos cómo R nos permite trabajar con estas estructuras fundamentales, dotándonos de las herramientas para modelar y analizar datos con relaciones más intrincadas. Prepárense para ver cómo R, con la ayuda de paquetes poderosos, transforma estos conceptos abstractos en herramientas prácticas para la ciencia de datos.
+
+## Grafos: Tejiendo Redes de Relaciones
+
+Un **grafo** es una de las estructuras de datos no lineales más potentes y versátiles. Imaginen una red social, las conexiones de una red eléctrica, el mapa de carreteras de una ciudad o incluso las interacciones entre proteínas en un organismo. Todos estos pueden ser modelados como grafos.
+
+Formalmente, un grafo se compone de un conjunto de **vértices** (también llamados nodos) y un conjunto de **aristas** (también llamadas enlaces o conexiones) que unen pares de vértices.
+
+### Tipos de Grafos
+
+*   **Dirigidos (Directed)**: Las aristas tienen una dirección específica (ej. un seguimiento en Twitter: A sigue a B, pero B no necesariamente sigue a A).
+*   **No Dirigidos (Undirected)**: Las aristas no tienen una dirección (ej. una amistad en Facebook: si A es amigo de B, B es amigo de A).
+*   **Ponderados (Weighted)**: Las aristas tienen un valor o "peso" asociado (ej. la distancia entre dos ciudades, la fuerza de una conexión).
+*   **No Ponderados (Unweighted)**: Las aristas simplemente indican una conexión, sin un valor adicional.
+
+### Grafos en R: El Paquete `igraph`
+
+En R, el paquete por excelencia para trabajar con grafos es `igraph`. Es una biblioteca extremadamente eficiente y rica en funcionalidades para la creación, manipulación y análisis de redes complejas.
+
+Primero, si no lo tienen instalado, es momento de hacerlo:
+
+```r
+# Instalar igraph si no lo tienen
+# install.packages("igraph")
+```
+
+Ahora, carguemos el paquete y empecemos a construir nuestro primer grafo.
+
+```r
+library(igraph)
+
+# Creamos un grafo simple no dirigido
+# Podemos definirlo a partir de un listado de aristas
+g1 <- graph_from_literal(A-B, B-C, C-D, D-A, B-D, A-C)
+print(g1)
+```
+
+Como pueden ver en la salida, `g1` es un grafo `UN--` (Undirected, Named) con 4 vértices y 6 aristas.
+
+Podemos visualizarlo fácilmente:
+
+```r
+# Visualizar el grafo
+plot(g1)
+```
+
+::: {.callout-note}
+`plot()` para `igraph` es muy versátil. Permite personalizar el diseño, colores, tamaños y muchas otras propiedades visuales. Experimenten con sus argumentos como `vertex.color`, `edge.color`, `layout`, etc.
+:::
+
+También podemos crear grafos a partir de otros formatos, como una matriz de adyacencia (qué vértices están conectados directamente) o una lista de aristas.
+
+```r
+# Grafo a partir de una matriz de adyacencia
+adj_matrix <- matrix(c(0, 1, 1, 0,
+                       1, 0, 1, 1,
+                       1, 1, 0, 1,
+                       0, 1, 1, 0), nrow = 4, byrow = TRUE)
+g2 <- graph_from_adjacency_matrix(adj_matrix, mode = "undirected")
+V(g2)$name <- c("V1", "V2", "V3", "V4") # Asignar nombres a los vértices
+plot(g2, main = "Grafo desde Matriz de Adyacencia")
+```
+
+```r
+# Grafo dirigido a partir de una lista de aristas
+edge_list <- data.frame(
+  from = c("Alice", "Bob", "Charlie", "David", "Eve", "Alice", "Charlie"),
+  to = c("Bob", "Charlie", "David", "Eve", "Alice", "Charlie", "Eve")
+)
+g3 <- graph_from_data_frame(edge_list, directed = TRUE)
+plot(g3, main = "Grafo Dirigido de Red Social", layout = layout_nicely(g3))
+```
+
+### Propiedades y Análisis de Grafos
+
+`igraph` nos permite calcular una gran cantidad de métricas y propiedades de un grafo:
+
+```r
+# Número de vértices y aristas
+vcount(g3)
+ecount(g3)
+
+# Grado de los vértices (número de conexiones)
+# Para grafos dirigidos, podemos ver in-degree (entrantes) y out-degree (salientes)
+degree(g3, mode = "in")
+degree(g3, mode = "out")
+degree(g3, mode = "all") # Suma de in y out
+
+# Componentes conectados (subgrafos donde todos los vértices están conectados entre sí)
+components(g1)
+
+# Camino más corto entre dos vértices
+shortest_paths(g3, from = "Alice", to = "Eve", output = "vpath")$vpath[[1]]
+
+# Centralidad de un vértice (importancia en la red)
+# Centralidad de intermediación (betweenness centrality)
+# ¿Cuántos caminos más cortos pasan a través de este vértice?
+betweenness(g3, normalized = TRUE)
+
+# Centralidad de cercanía (closeness centrality)
+# ¿Qué tan cerca está un vértice de todos los demás?
+closeness(g3, normalized = TRUE)
+```
+
+La exploración de grafos es un campo vasto y fascinante. `igraph` es una herramienta indispensable para cualquier científico de datos que trabaje con relaciones y redes.
+
+## Árboles Binarios: Jerarquías con Ramificaciones Limitadas
+
+Un **árbol** es un tipo especial de grafo no dirigido, acíclico y conectado. Esto significa que no tiene ciclos y cada nodo está conectado a todos los demás de alguna manera. En un árbol, generalmente se designa un nodo como la **raíz**, y a partir de ahí, los nodos se organizan jerárquicamente en **padres**, **hijos** y **hojas** (nodos sin hijos).
+
+Un **árbol binario** es un tipo específico de árbol donde cada nodo tiene como máximo dos hijos: un hijo "izquierdo" y un hijo "derecho". Son estructuras fundamentales en informática para organizar datos de manera eficiente para búsqueda, inserción y eliminación. Un caso particular muy útil es el **Árbol Binario de Búsqueda (BST)**, donde para cada nodo, todos los valores en su subárbol izquierdo son menores que su propio valor, y todos los valores en su subárbol derecho son mayores.
+
+### Implementando Árboles Binarios en R
+
+A diferencia de los grafos, donde `igraph` es el estándar, no existe un paquete único y universalmente adoptado en R para la creación de estructuras de árboles binarios genéricas como tipos de datos abstractos (al margen de implementaciones específicas para algoritmos como árboles de decisión). Sin embargo, podemos construir nuestra propia representación usando los tipos de datos de R, como listas o clases S3/S4, para ilustrar el concepto.
+
+Aquí construiremos una representación sencilla de un nodo de un árbol binario utilizando una clase S3, y mostraremos cómo se conectarían para formar un árbol.
+
+```r
+# Definición de un nodo de árbol binario como una clase S3
+# Un nodo tendrá un valor, y punteros a sus hijos izquierdo y derecho
+# (que a su vez serán otros nodos)
+make_node <- function(value, left = NULL, right = NULL) {
+  node <- list(value = value, left = left, right = right)
+  class(node) <- "binary_node"
+  return(node)
+}
+
+# Función para imprimir un nodo (método para la clase S3)
+print.binary_node <- function(x, ...) {
+  cat("Node Value:", x$value, "\n")
+  cat("  Left Child:", if (!is.null(x$left)) x$left$value else "NULL", "\n")
+  cat("  Right Child:", if (!is.null(x$right)) x$right$value else "NULL", "\n")
+}
+
+# Construyamos un pequeño árbol binario
+# Nivel 3 (hojas)
+node4 <- make_node(4)
+node6 <- make_node(6)
+node9 <- make_node(9)
+node12 <- make_node(12)
+
+# Nivel 2
+node5 <- make_node(5, left = node4, right = node6)
+node10 <- make_node(10, left = node9, right = node12)
+
+# Nivel 1 (raíz)
+root_node <- make_node(8, left = node5, right = node10)
+
+# Mostramos el nodo raíz y sus hijos
+print(root_node)
+print(root_node$left)
+print(root_node$right)
+print(root_node$left$left) # El hijo izquierdo del hijo izquierdo de la raíz
+```
+
+Este ejemplo demuestra cómo cada nodo es una entidad que contiene su propio valor y referencias a sus hijos. Al manipular estas referencias, podemos construir y modificar la estructura del árbol.
+
+### Operaciones Comunes en Árboles Binarios (Conceptos)
+
+*   **Inserción**: Añadir un nuevo nodo al árbol, manteniendo sus propiedades (ej. en un BST, manteniendo el orden).
+*   **Búsqueda**: Encontrar un nodo con un valor específico.
+*   **Eliminación**: Quitar un nodo del árbol.
+*   **Recorridos (Traversals)**: Visitar todos los nodos del árbol de una manera sistemática.
+    *   **In-order**: Izquierda -> Raíz -> Derecha (útil para BSTs, devuelve los elementos ordenados).
+    *   **Pre-order**: Raíz -> Izquierda -> Derecha (útil para copiar o serializar el árbol).
+    *   **Post-order**: Izquierda -> Derecha -> Raíz (útil para eliminar el árbol o evaluar expresiones).
+
+Implementar estas operaciones completamente en R como funciones recursivas es posible y una excelente práctica para entender cómo funcionan estas estructuras. Sin embargo, para mantener este capítulo conciso, nos centraremos en el concepto.
+
+::: {.callout-tip}
+Para una implementación más robusta de árboles de propósito general en R, consideren explorar el paquete `data.tree`. Aunque no se limita a árboles binarios, proporciona una estructura poderosa para trabajar con datos jerárquicos de manera intuitiva.
+:::
+
+## Conclusión
+
+Hemos recorrido un camino fascinante por el mundo de las estructuras no lineales en R. Los **grafos**, con el soporte excepcional del paquete `igraph`, nos permiten modelar y analizar sistemas complejos donde las relaciones son primordiales, desde redes sociales hasta interacciones biológicas. Los **árboles binarios**, aunque su implementación en R a nivel de estructura de datos pura puede requerir un enfoque más "manual" o específico, son fundamentales para entender cómo se organizan y procesan los datos de forma jerárquica, subyaciendo a muchos algoritmos de búsqueda y toma de decisiones.
+
+Dominar estas estructuras amplía enormemente su capacidad para abordar problemas de datos más complejos y estructurados. Sigan experimentando con `igraph` y, si se sienten aventureros, intenten implementar algoritmos básicos de árboles binarios en R para solidificar su comprensión.
+
+¡Hasta la próxima!
